@@ -1,8 +1,8 @@
-<h1>Bienvenido</h1>
 <?php 
 
 require_once "autoload.php";
-
+require_once 'views/layout/header.php';
+require_once 'views/layout/sidebar.php';
 
 //Para HACERLO MANUAL: ***************************************************************************************
 // $controlador = new UsuarioController();
@@ -36,10 +36,5 @@ if(isset($nombre_controlador) && class_exists($nombre_controlador)){
     echo "La página no existe";
 }
 
-/** EJEMPLO USANDO GET: http://localhost/udephp/PHP%20MVC/?controller=Usuario&action=crear */
-
-/*
- la función method_exists se utiliza para comprobar si un método específico está definido en una clase o si existe en un objeto dado. 
- Esta función toma dos parámetros: 
- el primer parámetro es el nombre de la clase o un objeto, y el segundo parámetro es el nombre del método que se desea verificar.*/
+require_once 'views/layout/footer.php';
 ?>
