@@ -1,117 +1,45 @@
-<!DOCTYPE html>
-<html lang="es">
+<h1>Bienvenido</h1>
+<?php 
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets\css\styles.css" />
-    <title>Tienda</title>
-</head>
-
-<body>
-    <div id="container">
-        <!-- CABECERA -->
-        <header id="header">
-            <div id="logo">
-                <img src="assets/img/camiseta.png" alt="camiseta">
-                <a href="index.php">
-                    Tienda de camisetas
-                </a>
-            </div>
-
-        </header>
-        <!-- MENÚ -->
-        <nav id="menu">
-            <ul>
-                <li>
-                    <a href="">Categoría</a>
-                </li>
-                <li>
-                    <a href="">Categoría</a>
-                </li>
-                <li>
-                    <a href="">Categoría</a>
-                </li>
-                <li>
-                    <a href="">Categoría</a>
-                </li>
-                <li>
-                    <a href="">Categoría</a>
-                </li>
-                <li>
-                    <a href="">Categoría</a>
-                </li>
-                <li>
-                    <a href="">Categoría</a>
-                </li>
-            </ul>
-        </nav>
-        <div id="content">
-            <!-- BARRA LATERAL -->
-
-            <aside id="lateral">
-                <div id="login" class="block_aside">
-                    <h3>Entrar a la web</h3>
-                    <form action="#" method="post">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" />
-                        <label for="password">Contraseña</label>
-                        <input type="password" name="password">
-                        <input type="submit" value="Enviar">
-
-                    </form>
-                    <ul>
-                        <li><a href="#">Mis pedidos</a></li>
-                        <li><a href="#">Gestionar pedidos</a></li>
-                        <li><a href="#">Gestionar categorías</a></li>
-                    </ul>
+require_once "autoload.php";
 
 
-                </div>
+//Para HACERLO MANUAL: ***************************************************************************************
+// $controlador = new UsuarioController();
+// $controlador->mostrarTodos();
+// $controlador->crear();
 
-            </aside>
+//Para hacerlo DINÁMICO O LLAMADO CONTROLADOR FRONTAL:  *******************************************************
+// PARA EL CONTROLADOR:
+if(isset($_GET['controller'])){
+    $nombre_controlador = $_GET['controller']. 'Controller';//Si concateno, no tengo que usar en la URL toda la clase
+}else{
+    echo "La página no existe";
+    exit(); //hace parar la ejecución
+}
 
-            <!-- CONTENIDO CENTRAL -->
-            <div id="central">
-                <div class="product">
-                    <img src="assets/img/camiseta.png" alt="">
-                    <h2>Camiseta Azul Ancha</h2>
-                    <p>30 €</p>
-                    <a href="#">Comprar</a>
+if(isset($nombre_controlador) && class_exists($nombre_controlador)){ 
+    //Realmente se puede poner sólo   if(class_exists($nombre_controlador)
+   
+    $controlador = new $nombre_controlador;
 
-                </div>
-                <div class="product">
-                    <img src="assets/img/camiseta.png" alt="">
-                    <h2>Camiseta Azul Ancha</h2>
-                    <p>30 €</p>
-                    <a href="#">Comprar</a>
+    // PARA LA ACCIÓN:
+    if(isset($_GET['action']) && method_exists($controlador, $_GET['action'])){
+        $action = $_GET['action'];
+    
+        $controlador->$action();
+    }else{
+        echo "La página no existe";
+    }
 
-                </div>
-                <div class="product">
-                    <img src="assets/img/camiseta.png" alt="">
-                    <h2>Camiseta Azul Ancha</h2>
-                    <p>30 €</p>
-                    <a href="#">Comprar</a>
+}else{
+    echo "La página no existe";
+}
 
-                </div>
-                <div class="product">
-                    <img src="assets/img/camiseta.png" alt="">
-                    <h2>Camiseta Azul Ancha</h2>
-                    <p>30 €</p>
-                    <a href="#">Comprar</a>
+/** EJEMPLO USANDO GET: http://localhost/udephp/PHP%20MVC/?controller=Usuario&action=crear */
 
-                </div>
-
-            </div>
-        </div>
-        <!-- PIE DE PÁGINA  -->
-        <footer id="footer">
-            <p>Desarrollado por Camilo &copy;
-                <?= date('Y'); ?>
-            </p>
-        </footer>
-    </div>
-
-</body>
-
-</html>
+/*
+ la función method_exists se utiliza para comprobar si un método específico está definido en una clase o si existe en un objeto dado. 
+ Esta función toma dos parámetros: 
+ el primer parámetro es el nombre de la clase o un objeto, y el segundo parámetro es el nombre del método que se desea verificar.*/
+?>
