@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="<?=base_url?>">
+    <!--Sin la tag base, ponemos en href de styles:
+     href="< ?=base_url?>assets\css\styles.css" -->
     <link rel="stylesheet" href="assets\css\styles.css" />
     <title>Tienda</title>
 </head>

@@ -1,6 +1,7 @@
 <?php 
 
 require_once "autoload.php";
+require_once "config/parameters.php";
 require_once 'views/layout/header.php';
 require_once 'views/layout/sidebar.php';
 
@@ -8,13 +9,19 @@ require_once 'views/layout/sidebar.php';
 // $controlador = new UsuarioController();
 // $controlador->mostrarTodos();
 // $controlador->crear();
-
+function show_error(){
+    $error = new ErrorController();
+    $error->index();
+}
 //Para hacerlo DINÁMICO O LLAMADO CONTROLADOR FRONTAL:  *******************************************************
 // PARA EL CONTROLADOR:
 if(isset($_GET['controller'])){
     $nombre_controlador = $_GET['controller']. 'Controller';//Si concateno, no tengo que usar en la URL toda la clase
+}elseif(!isset($_GET['controller']) && !isset($_GET['action'])){
+    $nombre_controlador = controlller_default;
 }else{
-    echo "La página no existe";
+    show_error();
+    // Sin el controlador: echo "La página no existe";
     exit(); //hace parar la ejecución
 }
 
@@ -28,12 +35,18 @@ if(isset($nombre_controlador) && class_exists($nombre_controlador)){
         $action = $_GET['action'];
     
         $controlador->$action();
+    }elseif(!isset($_GET['controller']) && !isset($_GET['action'])){
+        $default = action_default;
+        $controlador->$default();
     }else{
-        echo "La página no existe";
+        show_error();
+        //Sin el controlador: echo "La página no existe";
     }
 
 }else{
-    echo "La página no existe";
+    show_error();
+
+    //echo "La página no existe";
 }
 
 require_once 'views/layout/footer.php';
