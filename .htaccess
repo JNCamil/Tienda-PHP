@@ -11,16 +11,18 @@ RewriteEngine On
 # Cuando busca alguna página que no encuentra
 ErrorDocument 404 http://localhost/udephp/Tienda%20PHP/error/index
 
+# que nunca que accedamos aquí nos muestre un fichero o un directorio 
+#| Imagino que es para que vaya con controladores y funciones /usuarios/save
 # Que no saque las URL's si es un directorio o un fichero, 
-# que nunca que accedamos aquí nos muestre un fichero o un directorio
-RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteCond %{SCRIPT_FILENAME} !-f 
+# Una alternativa:
+#RewriteCond %{SCRIPT_FILENAME} !-d
+#RewriteCond %{SCRIPT_FILENAME} !-f 
 
-#Otra alternativa: RewriteCond %{REQUEST_FILENAME} !-d
-#                  RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 
 # Reglas de reescritura: ^reescribe todo a este formato
-RewriteRule ^(.*)/(.*) index.php?controller=$1&action=$2
+RewriteRule ^(.*)/(.*) index.php?controller=$1&action=$2 [L]
 # Es decir, pon en .* lo que haya en el 1, y en el segundo .* lo que haya en el 2
 
 # Otra alternativa:
