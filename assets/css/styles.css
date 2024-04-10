@@ -28,6 +28,16 @@ a:hover{
     color:red;
 }
 
+table{
+    text-align: center;
+    width: 100%;
+    border:1px solid #555;
+}
+td{
+    border-top:1px solid #ccc;
+    padding: 2px;
+}
+
 /*CONTAINER*/
 #container{
     width: 80%;
@@ -220,6 +230,11 @@ button, .button{
     background: #33AE3D;
     color: white !important;
     text-decoration: none;
+}
+.button-small{
+    width:120px;
+    text-align: center;
+    margin-bottom:20px;
 }
 label,
 input[type="buttom"],
