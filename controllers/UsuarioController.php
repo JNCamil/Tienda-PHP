@@ -58,7 +58,7 @@ class UsuarioController{
             if($identity){
                 $_SESSION['identity'] = $identity;
                 //var_dump($_SESSION['identity']);die();
-                if($identity['role']=='admin'){
+                if($identity['rol']=='admin'){
                     $_SESSION['admin']= true;
                 }
             }else{
