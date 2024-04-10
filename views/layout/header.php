@@ -24,29 +24,18 @@
 
         </header>
         <!-- MENÚ -->
+        <?php $categorias=Utils::showCategorys(); ?>
         <nav id="menu">
             <ul>
                 <li>
-                    <a href="">Categoría</a>
+                    <a href="">Inicio</a>
                 </li>
+                <?php foreach($categorias as $categoria): ?>
                 <li>
-                    <a href="">Categoría</a>
+                    <a href="#"><?=$categoria['nombre'];?></a>
                 </li>
-                <li>
-                    <a href="">Categoría</a>
-                </li>
-                <li>
-                    <a href="">Categoría</a>
-                </li>
-                <li>
-                    <a href="">Categoría</a>
-                </li>
-                <li>
-                    <a href="">Categoría</a>
-                </li>
-                <li>
-                    <a href="">Categoría</a>
-                </li>
+                <?php endforeach; ?>
+               
             </ul>
         </nav>
         <div id="content">
