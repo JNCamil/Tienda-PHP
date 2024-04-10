@@ -7,6 +7,10 @@ class Utils{
           unset($_SESSION[$name]);
         }
 
+        
+
+
+
         return $name;
     }
 }

@@ -181,6 +181,29 @@ class Usuario{
         }
         return $correct;
     }
+
+    public function login (){
+        $email=$this->email;
+        $password=$this->password;
+
+        //Comprobar si existe usuario
+        $result = false;
+        $query=$this->db->prepare("SELECT * FROM Usuarios WHERE email=?");
+        $query->execute(array($email));
+        $num_registros = $query->rowCount();
+        if($num_registros!=0){
+
+            $usuario = $query->fetch(PDO::FETCH_ASSOC);
+             //COMPROBAR CONTRASEÑA: Comprobar si es igual la que me llega que la que hay en la fila
+            $verify=password_verify($password, $usuario['password']);
+            
+            if($verify){
+                $result = $usuario;
+            }
+        }
+        return $result;
+
+    }
 }
 
 ?>
