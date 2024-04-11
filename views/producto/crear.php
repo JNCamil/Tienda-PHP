@@ -23,9 +23,6 @@
         <?php endforeach; ?>
     </select>
 
-    <label for="categoria">Categoría</label>
-    <input type="text" name="categoria">
-
     <label for="imagen">Imagen</label>
     <input type="file" name="imagen">
 

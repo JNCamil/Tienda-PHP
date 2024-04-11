@@ -11,8 +11,8 @@ Modelo de repositorio/consulta: En el cual tengo una librería de métodos que h
 class Producto{
     //Le definimos tantas propiedades como tengamos en la bbdd
     private $id;
-    private $nombre;
     private $categoria_id;
+    private $nombre;
     private $descripcion;
     private $precio;
     private $stock;
@@ -40,7 +40,11 @@ class Producto{
      *
      * @return  self
      */ 
-    public function setId($id)
+    public function setId($id) 
+    /*
+    SI NO USASE PDO, TENDRÍA QUE PONER EN SETTTERS UN PARA VALIDACIÓN 
+    $this->id=$this->db->real_escape_string($id)
+    */
     {
         $this->id = $id;
 
@@ -215,5 +219,16 @@ class Producto{
         $result=$productos->fetchAll(PDO::FETCH_ASSOC);
         return $result;
 
+    }
+
+    public function save(){
+        $date=date("Y-m-d");
+        $query=$this->db->prepare("INSERT INTO Productos VALUES (?,?,?,?,?,?,?,?,?)");
+        $result=$query->execute(array(NULL, $this->getCategoria_id(), $this->getNombre(), $this->getDescripcion(), $this->getPrecio(), $this->getStock(), NULL, $date, NULL));
+        $correct=false;
+        if($result){
+            $correct=true;
+        }
+        return $correct;
     }
 }
