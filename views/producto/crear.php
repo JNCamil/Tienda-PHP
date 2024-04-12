@@ -1,6 +1,7 @@
 <h1>Crear nuevos productos</h1>
 <div class="form_container">
-<form action="<?= base_url ?>producto/save" method="POST">
+<form action="<?= base_url ?>producto/save" method="POST" ENCTYPE="multipart/form-data">
+<!--SUBIDA DE ARCHIVOS: ATTR ENCTYPE="MULTIPART/FORM-DATA-->
     <label for="nombre">Nombre</label>
     <input type="text" name="nombre">
 

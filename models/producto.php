@@ -224,7 +224,7 @@ class Producto{
     public function save(){
         $date=date("Y-m-d");
         $query=$this->db->prepare("INSERT INTO Productos VALUES (?,?,?,?,?,?,?,?,?)");
-        $result=$query->execute(array(NULL, $this->getCategoria_id(), $this->getNombre(), $this->getDescripcion(), $this->getPrecio(), $this->getStock(), NULL, $date, NULL));
+        $result=$query->execute(array(NULL, $this->getCategoria_id(), $this->getNombre(), $this->getDescripcion(), $this->getPrecio(), $this->getStock(), NULL, $date, $this->getImagen()));
         $correct=false;
         if($result){
             $correct=true;

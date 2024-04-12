@@ -43,6 +43,22 @@ class ProductoController
                 $producto->setStock($stock);
                 $producto->setCategoria_id($categoria);
 
+
+                //GUARDAR LA IMAGEN
+                $file = $_FILES['imagen'];//VAR GLOBAL 
+                $filename = $file['name'];//NAME ARCHIVO
+                $mimetype = $file['type'];//TIPO ARCHIVO
+                //var_dump($file);die();
+
+                if($mimetype == "image/jpg" ||  $mimetype == "image/jpeg" || $mimetype == "image/png" || $mimetype == "image/gif"){
+                    if(!is_dir('uploads/images')){ //SI NO EXISTE CARPETA, SE CREA
+                        mkdir('uploads/images', 0777, true);//TRUE PARA QUE LO HAGA RECURSIVAMENTE
+                    }
+                    move_uploaded_file($file['tmp_name'], 'uploads/images/'.$filename);//MOVER ARCHIVO: Nombre temporal del archivo, destino
+                    $producto->setImagen($filename);
+
+                }
+
                 $save = $producto->save();
                 if ($save) {
                     $_SESSION['producto'] = 'complete';
