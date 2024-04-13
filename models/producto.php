@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*
 
@@ -8,7 +8,8 @@ Modelo de repositorio/consulta: En el cual tengo una librería de métodos que h
 
 */
 
-class Producto{
+class Producto
+{
     //Le definimos tantas propiedades como tengamos en la bbdd
     private $id;
     private $categoria_id;
@@ -21,7 +22,8 @@ class Producto{
     private $imagen;
     private $db;
 
-    public function __construct(){
+    public function __construct()
+    {
         //Conexión bbdd
         $this->db = Database::connect();
     }
@@ -29,7 +31,7 @@ class Producto{
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -39,8 +41,8 @@ class Producto{
      * Set the value of id
      *
      * @return  self
-     */ 
-    public function setId($id) 
+     */
+    public function setId($id)
     /*
     SI NO USASE PDO, TENDRÍA QUE PONER EN SETTTERS UN PARA VALIDACIÓN 
     $this->id=$this->db->real_escape_string($id)
@@ -53,7 +55,7 @@ class Producto{
 
     /**
      * Get the value of nombre
-     */ 
+     */
     public function getNombre()
     {
         return $this->nombre;
@@ -63,7 +65,7 @@ class Producto{
      * Set the value of nombre
      *
      * @return  self
-     */ 
+     */
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
@@ -73,7 +75,7 @@ class Producto{
 
     /**
      * Get the value of categoria_id
-     */ 
+     */
     public function getCategoria_id()
     {
         return $this->categoria_id;
@@ -83,7 +85,7 @@ class Producto{
      * Set the value of categoria_id
      *
      * @return  self
-     */ 
+     */
     public function setCategoria_id($categoria_id)
     {
         $this->categoria_id = $categoria_id;
@@ -93,7 +95,7 @@ class Producto{
 
     /**
      * Get the value of descripcion
-     */ 
+     */
     public function getDescripcion()
     {
         return $this->descripcion;
@@ -103,7 +105,7 @@ class Producto{
      * Set the value of descripcion
      *
      * @return  self
-     */ 
+     */
     public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
@@ -113,7 +115,7 @@ class Producto{
 
     /**
      * Get the value of precio
-     */ 
+     */
     public function getPrecio()
     {
         return $this->precio;
@@ -123,7 +125,7 @@ class Producto{
      * Set the value of precio
      *
      * @return  self
-     */ 
+     */
     public function setPrecio($precio)
     {
         $this->precio = $precio;
@@ -133,7 +135,7 @@ class Producto{
 
     /**
      * Get the value of stock
-     */ 
+     */
     public function getStock()
     {
         return $this->stock;
@@ -143,7 +145,7 @@ class Producto{
      * Set the value of stock
      *
      * @return  self
-     */ 
+     */
     public function setStock($stock)
     {
         $this->stock = $stock;
@@ -153,7 +155,7 @@ class Producto{
 
     /**
      * Get the value of oferta
-     */ 
+     */
     public function getOferta()
     {
         return $this->oferta;
@@ -163,7 +165,7 @@ class Producto{
      * Set the value of oferta
      *
      * @return  self
-     */ 
+     */
     public function setOferta($oferta)
     {
         $this->oferta = $oferta;
@@ -173,7 +175,7 @@ class Producto{
 
     /**
      * Get the value of fecha
-     */ 
+     */
     public function getFecha()
     {
         return $this->fecha;
@@ -183,7 +185,7 @@ class Producto{
      * Set the value of fecha
      *
      * @return  self
-     */ 
+     */
     public function setFecha($fecha)
     {
         $this->fecha = $fecha;
@@ -193,7 +195,7 @@ class Producto{
 
     /**
      * Get the value of imagen
-     */ 
+     */
     public function getImagen()
     {
         return $this->imagen;
@@ -203,7 +205,7 @@ class Producto{
      * Set the value of imagen
      *
      * @return  self
-     */ 
+     */
     public function setImagen($imagen)
     {
         $this->imagen = $imagen;
@@ -213,21 +215,65 @@ class Producto{
 
 
     //******************************* MÉTODOS */
-    public function getAll(){
-        $productos =$this->db->prepare("SELECT * FROM Productos ORDER BY id DESC");
+    public function getAll()
+    {
+        $productos = $this->db->prepare("SELECT * FROM Productos ORDER BY id DESC");
         $productos->execute();
-        $result=$productos->fetchAll(PDO::FETCH_ASSOC);
+        $result = $productos->fetchAll(PDO::FETCH_ASSOC);
         return $result;
-
+    }
+    public function getOne()
+    {
+        $productos = $this->db->prepare("SELECT * FROM Productos WHERE id=?");
+        $productos->execute(array($this->getId()));
+        $result = $productos->fetch(PDO::FETCH_ASSOC);
+        return $result;
     }
 
-    public function save(){
-        $date=date("Y-m-d");
-        $query=$this->db->prepare("INSERT INTO Productos VALUES (?,?,?,?,?,?,?,?,?)");
-        $result=$query->execute(array(NULL, $this->getCategoria_id(), $this->getNombre(), $this->getDescripcion(), $this->getPrecio(), $this->getStock(), NULL, $date, $this->getImagen()));
-        $correct=false;
-        if($result){
-            $correct=true;
+    public function save()
+    {
+        $date = date("Y-m-d");
+        $query = $this->db->prepare("INSERT INTO Productos VALUES (?,?,?,?,?,?,?,?,?)");
+        $result = $query->execute(array(NULL, $this->getCategoria_id(), $this->getNombre(), $this->getDescripcion(), $this->getPrecio(), $this->getStock(), NULL, $date, $this->getImagen()));
+        $correct = false;
+        if ($result) {
+            $correct = true;
+        }
+        return $correct;
+    }
+
+    public function edit()
+    {
+        $sql = "UPDATE Productos SET categoria_id=?, nombre=?, descripcion=?, precio=?, stock=?";
+        if ($this->getImagen() != null) {
+            $sql .= ", imagen=?";
+        }
+        $sql .= " WHERE id={$this->getId()}";
+
+        // var_dump($this);die();
+
+
+        $query = $this->db->prepare($sql);
+        if ($this->getImagen() != null) {
+            $result = $query->execute(array($this->getCategoria_id(), $this->getNombre(), $this->getDescripcion(), $this->getPrecio(), $this->getStock(), $this->getImagen()));
+        } else {
+            $result = $query->execute(array($this->getCategoria_id(), $this->getNombre(), $this->getDescripcion(), $this->getPrecio(), $this->getStock()));
+        }
+        $correct = false;
+        if ($result) {
+            $correct = true;
+        }
+        return $correct;
+    }
+
+
+    public function delete()
+    {
+        $query = $this->db->prepare("DELETE FROM Productos WHERE id=?");
+        $result = $query->execute(array($this->getId()));
+        $correct = false;
+        if ($result) {
+            $correct = true;
         }
         return $correct;
     }

@@ -43,34 +43,89 @@ class ProductoController
                 $producto->setStock($stock);
                 $producto->setCategoria_id($categoria);
 
+                if (isset($_FILES['imagen'])) {
 
-                //GUARDAR LA IMAGEN
-                $file = $_FILES['imagen'];//VAR GLOBAL 
-                $filename = $file['name'];//NAME ARCHIVO
-                $mimetype = $file['type'];//TIPO ARCHIVO
-                //var_dump($file);die();
 
-                if($mimetype == "image/jpg" ||  $mimetype == "image/jpeg" || $mimetype == "image/png" || $mimetype == "image/gif"){
-                    if(!is_dir('uploads/images')){ //SI NO EXISTE CARPETA, SE CREA
-                        mkdir('uploads/images', 0777, true);//TRUE PARA QUE LO HAGA RECURSIVAMENTE
+                    //GUARDAR LA IMAGEN
+                    $file = $_FILES['imagen']; //VAR GLOBAL 
+                    $filename = $file['name']; //NAME ARCHIVO
+                    $mimetype = $file['type']; //TIPO ARCHIVO
+                    //var_dump($file);die();
+
+                    if ($mimetype == "image/jpg" ||  $mimetype == "image/jpeg" || $mimetype == "image/png" || $mimetype == "image/gif") {
+                        if (!is_dir('uploads/images')) { //SI NO EXISTE CARPETA, SE CREA
+                            mkdir('uploads/images', 0777, true); //TRUE PARA QUE LO HAGA RECURSIVAMENTE
+                        }
+                        move_uploaded_file($file['tmp_name'], 'uploads/images/' . $filename); //MOVER ARCHIVO: Nombre temporal del archivo, destino
+                        $producto->setImagen($filename);
                     }
-                    move_uploaded_file($file['tmp_name'], 'uploads/images/'.$filename);//MOVER ARCHIVO: Nombre temporal del archivo, destino
-                    $producto->setImagen($filename);
-
                 }
 
-                $save = $producto->save();
+                //EN UN CASO ACTUALIZO EN EL OTRO GUARDO
+
+                if(isset($_GET['id'])){
+                    $id = $_GET['id'];
+                    $producto->setId($id);
+                    $save = $producto->edit();
+                }else{
+                    $save = $producto->save();
+                }
+
+                
                 if ($save) {
                     $_SESSION['producto'] = 'complete';
                 } else {
                     $_SESSION['producto'] = 'failed';
                 }
-            }else{
-                $_SESSION['producto']='failed';
+            } else {
+                $_SESSION['producto'] = 'failed';
             }
-        }else{
-            $_SESSION['producto']='failed';
+        } else {
+            $_SESSION['producto'] = 'failed';
         }
-        header("Location:".base_url."producto/gestion");
+        header("Location:" . base_url . "producto/gestion");
+    }
+
+
+    public function editar()
+    {
+        Utils::isAdmin();
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+
+            //Reutilizamos la vista, pero con una variable que le pasamos
+            $edit = true;
+
+            $producto = new Producto();
+            $producto->setId($id);
+            $pro = $producto->getOne();
+
+
+
+            require_once "views/producto/crear.php";
+        } else {
+            header("Location:" . base_url . "producto/gestion");
+        }
+    }
+
+    public function eliminar()
+    {
+
+        Utils::isAdmin();
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $producto = new Producto();
+            $producto->setId($id);
+            $delete = $producto->delete();
+            if ($delete) {
+                $_SESSION['delete'] = 'complete';
+            } else {
+                $_SESSION['delete'] = 'failed';
+            }
+        } else {
+            $_SESSION['delete'] = 'failed';
+        }
+
+        header("Location:" . base_url . "producto/gestion");
     }
 }
