@@ -1,5 +1,6 @@
 <?php 
 require_once "models/categoria.php";
+require_once "models/producto.php";
 class CategoriaController{
     public function index(){
         //echo "Controlador categoría, acción index";
@@ -34,6 +35,32 @@ class CategoriaController{
 
         header("Location:".base_url."categoria/index");
         
+    }
+
+    public function ver(){
+        if(isset($_GET['id'])){
+            $id= $_GET['id'];
+            //var_dump($_GET['id']);
+
+
+
+            //CONSEGUIR CATEGORÍA
+            $categoria = new Categoria();
+            $categoria->setId($id);
+            $categoria = $categoria->getOne();
+            //var_dump($categoria);die();
+            //var_dump($categoria);
+
+
+            //CONSEGUIR PRODUCTOS
+            $producto=new Producto();
+            $producto->setCategoria_id($id);
+            $productos=$producto->getAllCategory();
+            //var_dump($productos);die();
+            
+
+        }
+        require_once "views/categoria/ver.php";
     }
 
 

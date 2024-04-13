@@ -5,7 +5,7 @@
                     <?php if($pro['imagen'] != null): ?>
                     <img src="<?=base_url?>uploads/images/<?=$pro['imagen']?>" alt="">
                     <?php else: ?>
-                    <img src="assets/img/camiseta.png" alt="">
+                        <img src="<?=base_url?>assets/img/camiseta.png" alt="">
                     <?php endif; ?>
                     <h2><?=$pro['nombre']?></h2>
                     <p><?=$pro['precio']?></p>

@@ -66,6 +66,14 @@ class Categoria{
         return $result;
     }
 
+    public function getOne(){
+        $query=$this->db->prepare("SELECT * FROM Categorias WHERE id=?");
+        $query->execute(array($this->getId()));
+        $result=$query->fetch(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+
     public function save(){
         
         $query=$this->db->prepare("INSERT INTO Categorias VALUES (?,?)");

@@ -16,8 +16,8 @@
         <!-- CABECERA -->
         <header id="header">
             <div id="logo">
-                <img src="assets/img/camiseta.png" alt="camiseta">
-                <a href="index.php">
+                <img src="<?=base_url?>assets/img/camiseta.png" alt="camiseta">
+                <a href="<?=base_url?>">
                     Tienda de camisetas
                 </a>
             </div>
@@ -32,7 +32,7 @@
                 </li>
                 <?php foreach($categorias as $categoria): ?>
                 <li>
-                    <a href="#"><?=$categoria['nombre'];?></a>
+                    <a href="<?=base_url?>categoria/ver&id=<?=$categoria['id']?>"><?=$categoria['nombre'];?></a>
                 </li>
                 <?php endforeach; ?>
                
