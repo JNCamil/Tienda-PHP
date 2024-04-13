@@ -222,6 +222,17 @@ class Producto
         $result = $productos->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
+
+    public function getRandom($limit){
+    $productos = $this->db->prepare("SELECT * FROM Productos ORDER BY RAND() LIMIT $limit ");
+    $productos->execute();
+    $result = $productos->fetchAll(PDO::FETCH_ASSOC);
+    //var_dump($result);die();
+    return $result;
+
+
+    }
     public function getOne()
     {
         $productos = $this->db->prepare("SELECT * FROM Productos WHERE id=?");

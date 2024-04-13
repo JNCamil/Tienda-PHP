@@ -1,31 +1,17 @@
-<h1>Productos destacados</h1>
+<h1>Algunos de nuestros productos</h1>
+
+<?php foreach($productos as $pro): ?>
                 <div class="product">
+                    <?php if($pro['imagen'] != null): ?>
+                    <img src="<?=base_url?>uploads/images/<?=$pro['imagen']?>" alt="">
+                    <?php else: ?>
                     <img src="assets/img/camiseta.png" alt="">
-                    <h2>Camiseta Azul Ancha</h2>
-                    <p>30 €</p>
+                    <?php endif; ?>
+                    <h2><?=$pro['nombre']?></h2>
+                    <p><?=$pro['precio']?></p>
                     <a href="#" class="button">Comprar</a>
 
                 </div>
-                <div class="product">
-                    <img src="assets/img/camiseta.png" alt="">
-                    <h2>Camiseta Azul Ancha</h2>
-                    <p>30 €</p>
-                    <a href="#" class="button">Comprar</a>
-
-                </div>
-                <div class="product">
-                    <img src="assets/img/camiseta.png" alt="">
-                    <h2>Camiseta Azul Ancha</h2>
-                    <p>30 €</p>
-                    <a href="#" class="button">Comprar</a>
-
-                </div>
-                <div class="product">
-                    <img src="assets/img/camiseta.png" alt="">
-                    <h2>Camiseta Azul Ancha</h2>
-                    <p>30 €</p>
-                    <a href="#" class="button">Comprar</a>
-
-                </div>
-
+<?php endforeach; ?>
+           
     
