@@ -1,17 +1,20 @@
-<h1>Algunos de nuestros productos</h1>
+<?php if (isset($pro)) : ?>
 
-<?php foreach ($productos as $pro) : ?>
-    <div class="product">
-        <a href="<?=base_url?>producto/ver&id=<?=$pro['id']?>">
+    <h1><?= $pro['nombre'] ?></h1>
+  
+    
+        
             <?php if ($pro['imagen'] != null) : ?>
                 <img src="<?= base_url ?>uploads/images/<?= $pro['imagen'] ?>" alt="">
             <?php else : ?>
                 <img src="<?= base_url ?>assets/img/camiseta.png" alt="">
-            <?php endif; ?>
-            <h2><?= $pro['nombre'] ?></h2>
-        </a>
+            <?php endif; ?>       
+        <p><?= $pro['descripcion'] ?></p>
         <p><?= $pro['precio'] ?></p>
         <a href="#" class="button">Comprar</a>
 
-    </div>
-<?php endforeach; ?>
+    
+
+<?php else : ?>
+    <h1>El producto no existe</h1>
+<?php endif; ?>

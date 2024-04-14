@@ -12,6 +12,21 @@ class ProductoController
         require_once "views/producto/destacados.php";
     }
 
+    public function ver() {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+
+            //Reutilizamos la vista, pero con una variable que le pasamos
+            
+
+            $producto = new Producto();
+            $producto->setId($id);
+            $pro = $producto->getOne();
+
+        } 
+        require_once "views/producto/ver.php";
+    }
+
     public function gestion()
     {
         Utils::isAdmin();
@@ -65,7 +80,7 @@ class ProductoController
                     }
                 }
 
-                //EN UN CASO ACTUALIZO EN EL OTRO GUARDO
+                //EN UN CASO ACTUALIZO, EN EL OTRO GUARDO
 
                 if(isset($_GET['id'])){
                     $id = $_GET['id'];
