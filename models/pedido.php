@@ -232,6 +232,33 @@ class Pedido
         return $result;
     }
 
+//*************LÍNEA DE PEDIDOS */
+    public function save_linea(){
+        //SELECCIONA EL ID DEL ÚLTIMO INSERT
+        $sql= "SELECT LAST_INSERT_ID() AS 'pedido';";
+        $query=$this->db->prepare($sql);
+        $query->execute();
+        $pedido_id=$query->fetch(PDO::FETCH_ASSOC)['pedido'];
+
+        foreach ($_SESSION['carrito'] as  $elemento) {
+            //Pasamos el 'producto' de la sesión del carrito, que es el que tiene la imagen
+            $producto = $elemento['producto'];
+            //var_dump($producto);
+
+            $insert="INSERT INTO Lineas_pedidos VALUES(NULL, {$pedido_id}, {$producto['id']}, {$elemento['unidades']});";
+            $query=$this->db->prepare($insert);
+            $save=$query->execute();
+
+        }
+        $correct = false;
+        if ($save) {
+            $correct = true;
+        }
+        return $correct;
+       
+
+    }
+
 }
 
 
