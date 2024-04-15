@@ -376,3 +376,21 @@ button{
     clear:both;
     border-top: 4px solid #01B1EA;
 }
+
+/*CARRITO*/
+.total-carrito{
+    width: 290px;
+    float:right;
+}
+
+.total-carrito h3{
+    float:left;
+    display: block;
+    margin-top: 5px;
+}
+.button-pedido{
+    display:block;
+   float:right;
+    width: 100px;
+}
+

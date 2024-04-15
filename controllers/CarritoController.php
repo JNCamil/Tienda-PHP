@@ -30,7 +30,7 @@ class CarritoController
                 
                 $counter = 0;
 
-                if ($elemento['id_producto'] == $producto_id) {
+                if (isset($elemento['id_producto']) && $elemento['id_producto']== $producto_id) {
                     $_SESSION['carrito'][$indice]['unidades']++;
                     $counter++;
                 }
