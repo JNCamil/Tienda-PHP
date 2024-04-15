@@ -253,6 +253,7 @@ class Producto
         $productos = $this->db->prepare("SELECT * FROM Productos WHERE id=?");
         $productos->execute(array($this->getId()));
         $result = $productos->fetch(PDO::FETCH_ASSOC);
+        //var_dump($result);die();
         return $result;
     }
 
