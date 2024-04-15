@@ -25,12 +25,15 @@ class CarritoController
         }
 
         if (isset($_SESSION['carrito'])) {
+            //Ojo con poner el counter dentro del bucle porque se reinicia
+            //Cuenta el número de veces que se encuentra el producto en el carrito
+            $counter = 0;
 
             foreach ($_SESSION['carrito'] as $indice => $elemento) {
                 
-                $counter = 0;
+                
 
-                if (isset($elemento['id_producto']) && $elemento['id_producto']== $producto_id) {
+                if ($elemento['id_producto']== $producto_id) {
                     $_SESSION['carrito'][$indice]['unidades']++;
                     $counter++;
                 }
