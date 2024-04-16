@@ -225,9 +225,32 @@ class Pedido
 
     public function getOne()
     {
-        $productos = $this->db->prepare("SELECT * FROM Pedidos WHERE id=?");
-        $productos->execute(array($this->getId()));
-        $result = $productos->fetch(PDO::FETCH_ASSOC);
+        $pedidos = $this->db->prepare("SELECT * FROM Pedidos WHERE id=?");
+        $pedidos->execute(array($this->getId()));
+        $result = $pedidos->fetch(PDO::FETCH_ASSOC);
+        //var_dump($result);die();
+        return $result;
+    }
+    public function getOneByUser()
+    {
+        $sql="SELECT p.id, p.coste FROM Pedidos p"
+       // ." INNER JOIN Lineas_pedidos lp ON lp.pedido_id = p.id"
+        ." WHERE p.usuario_id=? ORDER BY id DESC LIMIT 1";
+        $pedido = $this->db->prepare($sql);
+        $pedido->execute(array($this->getUsuario_id()));
+        $result = $pedido->fetch(PDO::FETCH_ASSOC);
+        //var_dump($result);die();
+        return $result;
+    }
+
+
+    public function getProductsByPedido($id){
+        $productos = $this->db->prepare("SELECT * FROM Productos P"
+        ." INNER JOIN Lineas_pedidos L ON P.id=L.producto_id"
+        ." WHERE L.pedido_id=?");
+        $productos->execute(array($id));
+        
+        $result = $productos->fetchAll(PDO::FETCH_ASSOC);
         //var_dump($result);die();
         return $result;
     }
