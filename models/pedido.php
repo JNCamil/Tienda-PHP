@@ -243,6 +243,18 @@ class Pedido
         return $result;
     }
 
+    public function getAllByUser()
+    {
+        $sql="SELECT p.* FROM Pedidos p"
+       // ." INNER JOIN Lineas_pedidos lp ON lp.pedido_id = p.id"
+        ." WHERE p.usuario_id=? ORDER BY id DESC ";
+        $pedido = $this->db->prepare($sql);
+        $pedido->execute(array($this->getUsuario_id()));
+        $result = $pedido->fetchAll(PDO::FETCH_ASSOC);
+        //var_dump($result);die();
+        return $result;
+    }
+
 
     public function getProductsByPedido($id){
         $productos = $this->db->prepare("SELECT * FROM Productos P"

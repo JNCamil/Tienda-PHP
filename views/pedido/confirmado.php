@@ -13,7 +13,7 @@
 
         Número de pedido:<?= $pedido['id'] ?> <br>
         Total a pagar:<?= $pedido['coste'] ?> $<br>
-        Productos:
+        Productos: <br><br>
         <table>
             <tr>
                 <th>Imagen</th>
