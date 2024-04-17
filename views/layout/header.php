@@ -18,7 +18,7 @@
             <div id="logo">
                 <img src="<?=base_url?>assets/img/camiseta.png" alt="camiseta">
                 <a href="<?=base_url?>">
-                    Tienda de camisetas
+                    Tienda de Ropa
                 </a>
             </div>
 
