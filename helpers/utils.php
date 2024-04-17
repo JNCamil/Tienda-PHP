@@ -55,4 +55,54 @@ class Utils
     }
     return $stats;
   }
+
+  public static function showStatus($status)
+  {
+    /*
+    //Con match el valor que se genera dentro de las condiciones es el que pasa a estar dentro de la variable
+    $value = match($status){
+      0, 1, 2 => "eres feo",
+      3, 4, 5 => "eres no muy feo",
+      6, 7, 8, 9 => "bonito",
+      10 => "Guapo",
+      default => "No eres nada",
+    };
+    //Evaluando expresiones
+    $value = match(true){
+      $status <= 2 => "eres feo",
+      $status <= 5 => "eres no muy feo",
+      $status <= 9 => "bonito",
+      $status == 10 => "Guapo",
+      default => "No eres nada",
+    };
+*/
+     $value = match($status){
+      'confirm' => 'Pendiente',
+      'preparation' => 'En preparación',
+      'ready' => 'Preparado para enviar',
+      'sent'=> 'Enviado',
+    };
+    /*
+    //switch
+    $value = 'Pendiente';
+    switch ($status) {
+      case 'confirm':
+        $value = 'Pendiente';
+        break;
+      case 'preparation':
+        $value = 'En preparación';
+        break;
+      case 'ready':
+        $value = 'Preparado';
+        break;
+      case 'sent':
+        $value = 'Enviado';
+        break;
+    }
+    */
+
+    return $value;
+
+  
+  }
 }

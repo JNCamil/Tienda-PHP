@@ -25,7 +25,7 @@
                 <?= $pedido['fecha'] ?>
             </td>
             <td>
-                <?= $pedido['estado'] ?>
+                <?= Utils::showStatus($pedido['estado']) ?>
             </td>
 
         </tr>
