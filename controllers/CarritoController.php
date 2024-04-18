@@ -4,8 +4,12 @@ class CarritoController
 {
     public function index()
     {
+        if(isset($_SESSION['carrito']) && count($_SESSION['carrito']) >= 1){
         $carrito = $_SESSION['carrito'];
         //var_dump($_SESSION['carrito'][0]['unidades']);
+        }else{
+            $carrito = array();
+        }
 
         require_once "views/carrito/index.php";
         //echo "Controlador carrito, acción index";
@@ -63,8 +67,13 @@ class CarritoController
         header("Location:" . base_url . "carrito/index");
     }
 
-    public function remove()
+    public function delete()
     {
+        if(isset($_GET['index'])){
+            $index=$_GET['index'];
+            unset($_SESSION['carrito'][$index]);
+        }
+        header("Location:" . base_url . "carrito/index");
     }
 
 
